@@ -13,11 +13,16 @@ document.getElementById('reset').addEventListener('click', function () {
 });
 
 document.getElementById('js-normal-countup').addEventListener('click', function () {
-  $output.innerText = `カウントスタート`
+  const maxNum = getCountNum()
+  
+  if (!maxNum) {
+    $output.innerText = '数字を入力してください。';
+    return
+  }
 
   let result;
 
-  for (var i = 0; i < 1e9; i++) {
+  for (var i = 0; i <= Number(maxNum); i++) {
     result = i;
   }
 
@@ -25,7 +30,12 @@ document.getElementById('js-normal-countup').addEventListener('click', function 
 });
 
 document.getElementById('js-worker-countup').addEventListener('click', function () {
-  $output.innerText = `カウントスタート`
+    const maxNum = getCountNum()
+  
+  if (!maxNum) {
+    $output.innerText = '数字を入力してください。';
+    return
+  }
 
   // worker作成
   const worker = new Worker('js/worker.js');
@@ -35,5 +45,13 @@ document.getElementById('js-worker-countup').addEventListener('click', function 
     $output.innerText = e.data;
   }, false);
 
-  worker.postMessage('');
+  worker.postMessage(maxNum);
 });
+
+const getCountNum = () => {
+  const value = document.getElementById('countNum').value
+  if (!value || isNaN(value)) {
+    return false
+  }
+  return value
+}

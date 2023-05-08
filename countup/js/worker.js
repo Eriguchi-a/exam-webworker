@@ -1,7 +1,8 @@
 let result;
 // mainからのメッセージを受け取る
 self.addEventListener('message', function (e) {
-  for (var i = 0; i < 1e9; i++) {
+
+  for (var i = 0; i <= Number(e.data); i++) {
     result = i;
   }
 
